@@ -1,4 +1,4 @@
-#GraphQL Node and React Stack
+# GraphQL Node and React Stack
 ## Full-stack application with authentication and GraphQL integration
 
 ## Technologies 💻
