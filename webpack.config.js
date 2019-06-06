@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+  mode: 'development',
   entry: './client/index.js',
   output: {
     path: '/',
@@ -13,6 +14,15 @@ module.exports = {
         use: 'babel-loader',
         test: /\.js$/,
         exclude: /node_modules/
+      },
+      {
+        use: ['style-loader', 'css-loader'],
+        test: /\.css$/
+      },
+      {
+        use: 'graphql-tag/loader',
+        test: /\.(graphql|gql)$/,
+        exclude: /node_modules/,
       }
     ]
   },
@@ -20,5 +30,11 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'client/index.html'
     })
-  ]
+  ],
+  resolve: {
+    alias: {
+      Components: path.resolve(__dirname, 'client/components'),
+      Queries: path.resolve(__dirname, 'client/queries/')
+    }
+  }
 };
