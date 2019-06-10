@@ -1,9 +1,13 @@
+
 const webpack = require('webpack');
+const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const isDevelopment = true;
 module.exports = {
   mode: 'development',
-  entry: './client/index.js',
+  entry: ['babel-polyfill', './client/index.js'],
   output: {
     path: '/',
     filename: 'bundle.js'
@@ -11,13 +15,18 @@ module.exports = {
   module: {
     rules: [
       {
-        use: 'babel-loader',
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/env']
+          }
+        },
         test: /\.js$/,
         exclude: /node_modules/
       },
       {
-        use: ['style-loader', 'css-loader'],
-        test: /\.css$/
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+        test: /\.s?css$/
       },
       {
         use: 'graphql-tag/loader',
@@ -29,12 +38,20 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: 'client/index.html'
+    }),
+    new MiniCssExtractPlugin({
+      filename: isDevelopment ? '[name].css' : '[name].[hash].css',
+      chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css'
     })
   ],
   resolve: {
+    extensions: ['.js', '.jsx', '.scss'],
     alias: {
       Components: path.resolve(__dirname, 'client/components'),
-      Queries: path.resolve(__dirname, 'client/queries/')
+      Mutations: path.resolve(__dirname, 'client/mutations/'),
+      Queries: path.resolve(__dirname, 'client/queries/'),
+      Reducers: path.resolve(__dirname, 'client/reducers/'),
+      State: path.resolve(__dirname, 'client/state/')
     }
   }
 };
