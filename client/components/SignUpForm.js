@@ -6,6 +6,7 @@ import query from 'Queries/CurrentUser';
 
 const SignUpForm = (props) => {
   const [errors, setErrors] = useState([]);
+
   const onSubmit = ({email, password}) => {
     props.mutate({
       variables: {
@@ -19,7 +20,7 @@ const SignUpForm = (props) => {
   }
   return (
    <div>
-      <h4>Signup w/ Email and Password</h4>
+      <h4>Signup</h4>
       <AuthForm onSubmit={onSubmit} errors={errors} />
     </div>
   );

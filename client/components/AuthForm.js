@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
 import { useStateValue } from 'State/AppProvider';
 import { graphql } from 'react-apollo';
 import query from 'Queries/CurrentUser';
@@ -16,6 +17,7 @@ const AuthForm = (props) => {
           showModal: false,
           form: ''
         });
+        props.history.push('/dashboard');
       }
     }
     clearModal()
@@ -23,6 +25,13 @@ const AuthForm = (props) => {
 
   const { onSubmit } = props;
 
+  const backClick = () => {
+    dispatch({
+      type: 'CLEAR_MODAL',
+      showModal: false,
+      form: ''
+    });
+  }
   const submitForm = (e) => {
     e.preventDefault();
     onSubmit({email, password});
@@ -52,9 +61,10 @@ const AuthForm = (props) => {
         </div>
         <button className="btn">Submit</button>
       </form>
+      <button className="btn red"onClick={() => backClick()}>Back</button>
     </div>
     
   );
 };
 
-export default graphql(query)(AuthForm);
+export default withRouter(graphql(query)(AuthForm));

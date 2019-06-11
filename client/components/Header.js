@@ -52,6 +52,13 @@ const Header = (props) => {
           Home
         </Link>
         <ul className="right">
+          {currentUser && currentUser.id &&
+            <li>
+              <Link to="/dashboard">
+                Dashboard
+              </Link>
+            </li>
+          }
           {renderButtons()}
         </ul>
       </div>

@@ -26,7 +26,7 @@ class Modal extends Component {
   render() {
     return ReactDOM.createPortal(
       // Any valid React child: JSX, strings, arrays, etc.
-      <div className="modal-container" styles={{ minHeight: '500px', height: '100%', width: '100%' }}>
+      <div className="modal-container">
         {this.props.children}
       </div>,
       // A DOM element
